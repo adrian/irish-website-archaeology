@@ -1,0 +1,113 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Ireland On-Line Subscriber Websites</title>
+  <meta name="description" content="List of IOL subscriber websites">
+  <meta name="author" content="Adrian Smith">
+
+  <link rel="stylesheet" href="style.css" type="text/css" id="" media="print, projection, screen" />
+  <script src="jquery-latest.js"></script>
+  <script src="jquery.tablesorter.min.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        $.tablesorter.addParser({ 
+            id: 'httpdate', 
+            is: function(s) { 
+                return false; 
+            }, 
+            format: function(s) { 
+                //Given a string like this "Thu, 21 Apr 2005 17:32:54 GMT", return the date's epoch.
+                var parts = s.match(/(\S+), (\d+) (\S+) (\d+) (\d+):(\d+):(\d+) GMT/);
+
+                switch (parts[3]) {
+                    case 'Jan':
+                        month = 0;
+                        break;
+                    case 'Feb':
+                        month = 1;
+                        break;
+                    case 'Mar':
+                        month = 2;
+                        break;
+                    case 'Apr':
+                        month = 3;
+                        break;
+                    case 'May':
+                        month = 4;
+                        break;
+                    case 'Jun':
+                        month = 5;
+                        break;
+                    case 'Jul':
+                        month = 6;
+                        break;
+                    case 'Aug':
+                        month = 7;
+                        break;
+                    case 'Sep':
+                        month = 8;
+                        break;
+                    case 'Oct':
+                        month = 9;
+                        break;
+                    case 'Nov':
+                        month = 10;
+                        break;
+                    case 'Dec':
+                        month = 11;
+                        break;
+                }
+
+                year = +parts[4]
+                day = +parts[2]
+                hour = +parts[5]
+                minute = +parts[6]
+                second = +parts[7]
+
+                return Date.UTC(year, month, day, hour, minute, second);
+            }, 
+            type: 'numeric' 
+        }); 
+
+        $(document).ready(function() {
+            $("#websites").tablesorter({
+                headers: {
+                    1: {
+                        sorter:'httpdate'
+                    } 
+                },
+                sortList: [[1,0]]
+            })
+        });
+    </script>
+
+    <h1>Ireland On-Line Subscriber Websites</h1>
+    <p>For information about this site see <a href="http://www.github.com/adrian/irish-website-archaeology/">http://www.github.com/adrian/irish-website-archaeology/</a></p>
+    <table id="websites" class="tablesorter">
+        <colgroup>
+            <col style="width:75%">
+            <col style="width:25%">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Website</th>
+                <th>Last Update Date</th>
+            </tr>
+        </thead>
+        <tbody>
+{% for website in websites %}
+    {%- if website is none %}{% continue %}{% endif %}
+            <tr>
+                <td><a href="{{ website.url }}">{{ website.title }}</a></td>
+                <td>{{ website.last_modified }}</td>
+            </tr>
+{% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
