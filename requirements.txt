@@ -1,3 +1,2 @@
-GoogleScraper
 beautifulsoup4
 jinja2
