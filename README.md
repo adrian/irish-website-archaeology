@@ -6,6 +6,6 @@ The URLs are listed in **iol_urls.txt**. To add a URL submit a pull request or s
 The script **generate\_website.py** generates a HTML page with a link to the site and the page's last update date. The page is hosted at http://www.17od.com/irish-website-archaeology/iol_websites.html.
 
 ## Development Environment Setup
-virtualenv -p python3 .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+    virtualenv -p python3 .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
